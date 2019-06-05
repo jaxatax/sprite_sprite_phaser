@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <!-- https://phaser.io/tutorials/making-your-first-phaser-2-game -->
+  <!-- https://github.com/topherPedersen/Phaser2QuickstartTutorials  -->
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>repl.it</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+  </head>
+  <body>
+    <script>
+      var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, '', { preload: preload, create: create, update: update});
+
+      function preload() {
+        game.load.image('space', 'assets/space.jpg');
+        game.load.image('sprite_sprite', 'assets/sprite_sprite.jpg');
+        game.load.image('soda_fizz', 'assets/soda_fizz.jpg');
+      }
+
+      var cursors;
+      var sprite_sprite;
+      var space;
+      var soda_fizz;
+      var space_key;
+
+      function create() {
+        space = game.add.sprite(0, 0, 'space');
+        space.width = window.innerWidth;
+        space.height = window.innerHeight;
+        
+        sprite_sprite = game.add.sprite(window.innerWidth/2, window.innerHeight/2, 'sprite_sprite');
+
+        soda_fizz = game.add.sprite(0,0,'soda_fizz')
+        soda_fizz.visible = false
+
+        cursors = game.input.keyboard.createCursorKeys();
+
+        space_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+        game.input.keyboard.addKeyCapture(Phaser.Keyboard.SPACEBAR );
+      }
+
+      function update() {
+
+        if (cursors.left.isDown) {
+          // move left
+          sprite_sprite.x -= 20;
+        } else if (cursors.right.isDown) {
+          // move right
+          sprite_sprite.x += 20;
+        } else if (cursors.down.isDown) {
+          // move down
+          sprite_sprite.y += 20
+        } else if (cursors.up.isDown) {
+          // move up
+          sprite_sprite.y -= 20
+        } else if (space_key.isDown) {
+          console.log('space down');
+          soda_fizz.visible = true
+          soda_fizz.x = sprite_sprite.x + 60
+          soda_fizz.y = sprite_sprite.y
+        } else if (space_key.isDown == false) {
+          soda_fizz.y -= 10
+        }
+      }
+    </script>
+  </body>
+</html>
